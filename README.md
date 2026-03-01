@@ -12,6 +12,7 @@ claude-code-workflow/               ~/.claude/
 │   └── commands/                   ├── commands/
 │       ├── hld.md         ──────►  │   ├── hld.md         (/hld command)
 │       ├── lld.md         ──────►  │   ├── lld.md         (/lld command)
+│       ├── onboard.md     ──────►  │   ├── onboard.md     (/onboard command)
 │       ├── diagram.md     ──────►  │   ├── diagram.md     (/diagram command)
 │       └── review.md      ──────►  │   └── review.md      (/review command)
 │                                   │
@@ -60,6 +61,7 @@ cd ~/claude-code-workflow
 |---------|-------------|
 | `/hld <system>` | Generates a 10-section High-Level Design with diagrams |
 | `/lld <module>` | Generates a 12-section Low-Level Design with API specs, DB schemas, state machines |
+| `/onboard` | Generates exhaustive onboarding docs from the codebase — reads HLD/LLD + source, covers architecture, setup, workflows, conventions, gotchas |
 | `/diagram <description>` | Generates a single diagram using the right tool (Mermaid/Excalidraw/Python Diagrams) |
 | `/review <code or design>` | Reviews across 5 categories with prioritized action items |
 
@@ -91,10 +93,12 @@ Command files use `$ARGUMENTS` to receive user input (e.g., `/my-command build a
 | `claude/CLAUDE.md` | Global instructions (diagram strategy, color coding) |
 | `claude/commands/hld.md` | /hld slash command |
 | `claude/commands/lld.md` | /lld slash command |
+| `claude/commands/onboard.md` | /onboard slash command |
 | `claude/commands/diagram.md` | /diagram slash command |
 | `claude/commands/review.md` | /review slash command |
 | `templates/hld-template.md` | HLD template with pre-wired diagrams |
 | `templates/lld-template.md` | LLD template with API specs, DB design, state machines |
+| `templates/onboard-template.md` | Onboarding doc template (17 sections) |
 | `examples/cloud-architecture.py` | Python Diagrams AWS architecture example |
 | `docs/setup-guide.md` | Complete setup walkthrough for beginners |
 | `docs/how-it-works.md` | How Claude Code config loading works |
