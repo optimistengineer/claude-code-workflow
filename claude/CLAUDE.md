@@ -1,5 +1,12 @@
 # Global Claude Code Instructions
 
+## Output Conventions
+
+- Create output directories before writing: `docs/designs/`, `docs/diagrams/`, `examples/`
+- Use kebab-case for filenames: `hld-payment-service.md`, `user-auth-flow.svg`
+- Always read existing files/code before modifying or reviewing them
+- Slash commands receive user input via `$ARGUMENTS`
+
 ## Hybrid Diagram Strategy
 
 Use the right tool for each diagram type. Default to Mermaid (~80% of diagrams).

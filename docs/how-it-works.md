@@ -17,7 +17,7 @@ Claude Code loads configuration in layers, with later layers overriding earlier 
         ↓
 4. Global MCP servers: ~/.claude/.mcp.json
         ↓
-5. Project config: <project>/.claude/CLAUDE.md   ← overrides global
+5. Project config: <project>/.claude/CLAUDE.md   ← extends global (both active)
         ↓
 6. Project commands: <project>/.claude/commands/  ← merged with global
         ↓
@@ -29,10 +29,10 @@ Claude Code loads configuration in layers, with later layers overriding earlier 
 | Scope | Config File | Commands | MCP Servers |
 |-------|------------|----------|-------------|
 | **Global** (`~/.claude/`) | Base instructions | Available everywhere | Available everywhere |
-| **Project** (`<project>/.claude/`) | Overrides global | Merged (project wins on conflict) | Merged with global |
+| **Project** (`<project>/.claude/`) | Extends global (both active) | Merged (project wins on conflict) | Merged with global |
 
 Key behaviors:
-- **CLAUDE.md**: Project-level *adds to* global instructions (both are active)
+- **CLAUDE.md**: Project-level *adds to* global instructions — both global and project CLAUDE.md are active simultaneously, they do not override each other
 - **Commands**: If the same command name exists in both global and project, project wins
 - **MCP servers**: Merged — both global and project servers are available
 

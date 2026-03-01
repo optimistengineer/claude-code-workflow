@@ -44,9 +44,9 @@ safe_copy() {
 }
 
 echo ""
-echo "╔══════════════════════════════════════════════════╗"
-echo "║   Claude Code Configuration Kit — Installer      ║"
-echo "╚══════════════════════════════════════════════════╝"
+echo "╔═══════════════════════════════════════════════════╗"
+echo "║   Claude Code Configuration Kit — Installer       ║"
+echo "╚═══════════════════════════════════════════════════╝"
 echo ""
 
 # ── Step 1: Create directories ──

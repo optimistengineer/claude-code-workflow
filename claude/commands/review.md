@@ -1,5 +1,7 @@
 Review the following code or design: $ARGUMENTS
 
+First, **read all target files** thoroughly. If $ARGUMENTS is a directory, read the key files within it. If it's a design doc, read the full document. Never review code you haven't read.
+
 ## Review Categories (5 total)
 
 Evaluate across each category using a 3-level scale: **Pass**, **Warn**, **Fail**.
