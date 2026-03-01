@@ -129,7 +129,7 @@ echo "CLAUDE.md:"
 [ -f ~/.claude/CLAUDE.md ] && echo "  ✅ Found" || echo "  ❌ Missing"
 echo ""
 echo "Commands:"
-for cmd in hld lld onboard diagram review; do
+for cmd in hld lld onboard design-decisions diagram review; do
   [ -f ~/.claude/commands/${cmd}.md ] && echo "  ✅ /${cmd}" || echo "  ❌ /${cmd} missing"
 done
 echo ""

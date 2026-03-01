@@ -169,7 +169,22 @@ Extracted from the actual codebase — not generic advice:
 - **What NOT to do** — min 5 anti-patterns, each with: pattern, why it's wrong, what to do instead, example from repo if present
 
 ### 19. Design Decisions
-Infer from the codebase: framework choice, DB choice, auth approach, pagination strategy, event system, caching strategy, etc. Table: # | Decision | Options that existed | Chosen | Rationale | Trade-offs accepted.
+
+First, a summary table: # | Decision | Category | Chosen | Key Trade-off. Aim for 10–15 rows covering: language/runtime, framework, database type, ORM vs raw SQL, caching, auth mechanism, API style, API versioning, pagination, event/messaging system, error handling pattern, logging approach, config management, test strategy, containerization, monolith vs services.
+
+Then, for each row, write a full ADR block:
+
+**ADR-N: [Precise title — e.g., "PostgreSQL over MongoDB as primary data store"]**
+- **Category:** Technology | Architecture | Data | API | Auth | Testing | Deployment | Cross-cutting
+- **Context:** [What problem or constraint drove this decision?]
+- **Options considered:** [At least 2 — one sentence each with their key characteristic]
+- **Decision:** [What was chosen]
+- **Rationale:** [Why — specific to this codebase, not generic]
+- **Trade-offs accepted:** [What became harder; what flexibility was lost]
+- **Consequences:** [Effect on dev experience, operations, future scalability]
+- **Evidence:** `[file:line or library name from manifest]`
+
+Infer decisions from: manifest files (every dependency is a decision), directory structure, config values, `deleted_at` columns (soft delete), UUID vs integer PKs, query param names (`cursor` vs `offset`), router file patterns, code comments with "Note:/Why:/Because:/HACK:" keywords.
 
 ### 20. Risks & Mitigations
 Identify from reading the architecture: SPOFs, scaling bottlenecks, data loss scenarios, security gaps, operational risks. Table: # | Risk | Probability (H/M/L) | Impact (H/M/L) | Mitigation | Owner (team, not person).

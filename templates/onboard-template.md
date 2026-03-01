@@ -885,13 +885,54 @@ Rule: **never swallow errors**. If you catch, either handle fully or re-throw wi
 
 ## 19. Design Decisions
 
-| # | Decision | Options considered | Chosen | Rationale | Trade-offs |
-|---|----------|-------------------|--------|-----------|------------|
-| 1 | [e.g., Framework choice] | [A, B, C] | [B] | [Why] | [What's harder now] |
-| 2 | [e.g., Auth approach] | [JWT, session, OAuth] | [JWT] | [Why] | [Stateless — no revocation without blocklist] |
-| 3 | [e.g., Pagination strategy] | [offset, cursor] | [cursor] | [Stable under inserts] | [Can't jump to page N directly] |
-| 4 | [e.g., DB choice] | [Postgres, MySQL, Mongo] | [Postgres] | [Why] | [What's harder] |
-| 5 | [e.g., Event system] | [SQS, RabbitMQ, Kafka] | [SQS] | [Why] | [No consumer groups natively] |
+### Summary
+
+| # | Decision | Category | Chosen | Key Trade-off |
+|---|----------|----------|--------|---------------|
+| 1 | [e.g., Web framework] | Technology | [e.g., Gin] | [e.g., Less magic, but more boilerplate than full-stack alternatives] |
+| 2 | [e.g., Primary data store] | Data | [e.g., PostgreSQL] | [e.g., Strong consistency, but harder to scale writes horizontally] |
+| 3 | [e.g., Auth approach] | Auth | [e.g., JWT stateless] | [e.g., No session store needed, but revocation requires a blocklist] |
+| 4 | [e.g., Pagination] | API | [e.g., Cursor-based] | [e.g., Stable under inserts, but can't jump to page N] |
+| 5 | [e.g., Event system] | Architecture | [e.g., SQS] | [e.g., Managed, but no consumer groups — fan-out requires SNS] |
+
+*(add one row per significant decision — aim for 10–15)*
+
+---
+
+### ADR-1: [Precise Title — e.g., "PostgreSQL over MongoDB as primary data store"]
+
+**Category:** Technology | Architecture | Data | API | Auth | Testing | Deployment | Cross-cutting
+
+**Context**
+[What problem or need drove this decision? What constraints existed — team size, existing infra, data shape, scale requirements?]
+
+**Options Considered**
+- **[Option A]** — [one sentence: key characteristic relevant to this decision]
+- **[Option B]** — [one sentence]
+- **[Option C]** (if applicable)
+
+**Decision**
+[Option X was chosen.]
+
+**Rationale**
+[Why this option — specific to this codebase, not generic.]
+
+**Trade-offs Accepted**
+- [What became harder or impossible]
+- [What future flexibility is reduced]
+
+**Consequences**
+- Developer experience: [effect]
+- Operations: [effect]
+- Future scalability: [effect]
+
+Evidence: `[file:line or library name from manifest]`
+
+---
+
+### ADR-2: [Next Decision]
+
+*(repeat ADR block for each row in the summary table)*
 
 ---
 
