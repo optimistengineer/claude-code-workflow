@@ -1,5 +1,7 @@
 Generate a **Low-Level Design (LLD)** document for: $ARGUMENTS
 
+If no module is specified, ask: "Which module or component would you like me to design? Provide a name or description."
+
 First research the module: read relevant source code, existing HLD, configs, and schemas to understand the implementation context before writing.
 
 ## Document Structure
@@ -36,10 +38,10 @@ Full request lifecycle for this module — include every actual participant (aut
 - Migration strategy (tool, reversibility, testing approach)
 
 ### 7. Event Design ← Mermaid flowchart
-Producers → Topics/Queues → Consumers, with DLQ handling. Include CloudEvents-style event schema JSON example.
+Producers → Topics/Queues → Consumers, with DLQ handling. Include CloudEvents-style event schema JSON example. **Skip this section entirely if this module does not produce or consume events.**
 
 ### 8. State Machine ← Mermaid state diagram
-Primary entity lifecycle with all transitions. Include transition rules table (from, to, trigger, guard condition).
+Primary entity lifecycle with all transitions. Include transition rules table (from, to, trigger, guard condition). **Skip this section entirely if this module has no stateful entity with meaningful lifecycle transitions.**
 
 ### 9. Error Handling
 - Error taxonomy table (category, example, action)

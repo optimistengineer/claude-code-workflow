@@ -1,5 +1,7 @@
 Generate a diagram for: $ARGUMENTS
 
+If no description is provided, ask: "What would you like me to diagram? Describe the system, flow, or component."
+
 If the request references existing code or systems, read the relevant files first to ensure accuracy.
 
 ## Tool Selection (Hybrid Strategy)

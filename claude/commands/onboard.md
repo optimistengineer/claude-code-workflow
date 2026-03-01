@@ -1,5 +1,7 @@
 Generate a **complete onboarding document** for the codebase at: $ARGUMENTS
 
+If no path is specified, analyze the current working directory.
+
 This is written by a principal architect for a junior engineer. It must be exhaustive and self-sufficient — covering architecture, design, data, API, behavior, operations, and development workflows. No pre-existing HLD or LLD is needed; derive everything from the codebase itself.
 
 ---

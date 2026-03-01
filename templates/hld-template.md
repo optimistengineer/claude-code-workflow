@@ -79,10 +79,10 @@ graph TB
 
 ## 4. Design Decisions
 
-| # | Decision | Options Considered | Chosen | Rationale |
-|---|----------|-------------------|--------|-----------|
-| 1 | [Decision] | A, B, C | B | [Why B] |
-| 2 | [Decision] | X, Y | X | [Why X] |
+| # | Decision | Options Considered | Chosen | Rationale | Trade-offs Accepted |
+|---|----------|-------------------|--------|-----------|---------------------|
+| 1 | [Decision] | A, B, C | B | [Why B] | [What's harder now] |
+| 2 | [Decision] | X, Y | X | [Why X] | [What's given up] |
 
 ---
 

@@ -1,5 +1,7 @@
 Generate a **High-Level Design (HLD)** document for: $ARGUMENTS
 
+If no system is specified, ask: "What system would you like me to design? Describe it briefly."
+
 First research the system: read relevant code, configs, and existing docs to understand the domain before writing.
 
 ## Document Structure
@@ -21,7 +23,7 @@ Use **Excalidraw MCP** (`read_me` then `create_view`). Show system boundary, act
 `graph TB` with subgraphs: Core (Blue), External (Green), Data (Yellow). Include component responsibilities table and communication patterns table (From, To, Protocol, Pattern).
 
 ### 4. Design Decisions
-ADR-style table: #, Decision, Options Considered, Chosen, Rationale.
+ADR-style table: #, Decision, Options Considered, Chosen, Rationale, Trade-offs Accepted.
 
 ### 5. Data Flow ← Mermaid sequence diagrams
 Two diagrams: **happy path** (full request lifecycle) and **primary error path** (failure + DLQ/retry handling).
