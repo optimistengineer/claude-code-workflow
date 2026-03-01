@@ -1,6 +1,8 @@
 {
-  "excalidraw": {
-    "type": "sse",
-    "url": "https://mcp.excalidraw.com/sse"
+  "mcpServers": {
+    "excalidraw": {
+      "type": "url",
+      "url": "https://mcp.excalidraw.com/sse"
+    }
   }
 }
