@@ -49,16 +49,17 @@ claude-code-workflow/                 ~/.claude/
 │   └── commands/              →      commands/
 │       ├── hld.md             →          hld.md
 │       ├── lld.md             →          lld.md
+│       ├── onboard.md         →          onboard.md
 │       ├── diagram.md         →          diagram.md
 │       └── review.md          →          review.md
 ├── mcp-servers.json           →      .mcp.json
 │
-├── templates/                        (stays in repo — referenced by commands)
-├── examples/                         (stays in repo — reference scripts)
+├── templates/                        (stays in repo — reference scaffolds only)
+├── examples/                         (stays in repo — example scripts)
 └── docs/                             (stays in repo — documentation)
 ```
 
-Files in `templates/`, `examples/`, and `docs/` are **not** copied to `~/.claude/`. They stay in the repo and are referenced by the slash commands when you run them from within this project directory.
+Files in `templates/`, `examples/`, and `docs/` are **not** copied to `~/.claude/`. They are reference material — the slash commands are fully self-contained and do not depend on these files at runtime.
 
 ---
 
@@ -115,5 +116,5 @@ Files in `templates/`, `examples/`, and `docs/` are **not** copied to `~/.claude
 | Repo ≠ `~/.claude/` | Keeps docs, templates, examples separate from config |
 | `install.sh` for first time | Safe setup with confirmation prompts |
 | `sync.sh` for updates | Shows diffs, never silently overwrites |
-| Templates stay in repo | Commands reference them — works when running from repo dir |
+| Templates stay in repo | Reference scaffolds only — commands are self-contained, templates are not dependencies |
 | MCP config as `.mcp.json` | Claude Code's expected filename for global MCP servers |

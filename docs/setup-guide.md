@@ -158,7 +158,7 @@ python3 -c "import diagrams" 2>/dev/null && echo "  âœ… Installed" || echo "  âš
 
 ### Python Diagrams errors
 
-- Install Graphviz: `brew install graphviz` (macOS) or `apt install graphviz` (Linux)
+- Install Graphviz: `brew install graphviz` (macOS) or `sudo apt install graphviz` (Linux)
 - Graphviz is required by the `diagrams` library for rendering
 
 ### Permission denied on install.sh

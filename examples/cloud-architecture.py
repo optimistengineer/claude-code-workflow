@@ -13,6 +13,8 @@ Output:
     docs/diagrams/aws-cloud-architecture.svg (SVG format)
 """
 
+import os
+
 from diagrams import Cluster, Diagram, Edge
 from diagrams.aws.compute import ECS
 from diagrams.aws.database import RDS, ElastiCache
@@ -21,6 +23,8 @@ from diagrams.aws.management import Cloudwatch
 from diagrams.aws.network import ALB, CloudFront, Route53
 from diagrams.aws.security import WAF
 from diagrams.aws.storage import S3
+
+os.makedirs("docs/diagrams", exist_ok=True)
 
 graph_attr = {
     "fontsize": "14",

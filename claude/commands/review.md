@@ -1,5 +1,7 @@
 Review the following code or design: $ARGUMENTS
 
+If no target is specified, ask: "What would you like me to review? Provide a file path, directory, or paste the code/design directly."
+
 First, **read all target files** thoroughly. If $ARGUMENTS is a directory, read the key files within it. If it's a design doc, read the full document. Never review code you haven't read.
 
 ## Review Categories (5 total)

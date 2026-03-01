@@ -28,7 +28,7 @@ Classes with key methods and relationships. Include design patterns table (patte
 - **Pagination:** cursor-based strategy with example response shape
 
 ### 5. API Flow ← Mermaid sequence diagram
-Full request lifecycle: Client → Gateway → Auth → Service → Validation → DB → Cache invalidation → Event emission → Response.
+Full request lifecycle for this module — include every actual participant (auth middleware, validation, service, repository, DB, cache, queue, external calls). Only include steps that actually exist in this module; do not add cache or event steps if this module doesn't use them.
 
 ### 6. Database Design ← Mermaid ER diagram
 - Tables with columns, types, constraints (NOT NULL, DEFAULT, FK)

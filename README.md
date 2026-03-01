@@ -65,6 +65,18 @@ cd ~/claude-code-workflow
 | `/diagram <description>` | Generates a single diagram using the right tool (Mermaid/Excalidraw/Python Diagrams) |
 | `/review <code or design>` | Reviews across 5 categories with prioritized action items |
 
+## When to Use Which Command
+
+| Situation | Command |
+|-----------|---------|
+| Designing a **new system** before building it | `/hld` |
+| Designing a **specific module** in detail before coding it | `/lld` |
+| Documenting an **existing codebase** for a new team member | `/onboard` |
+| Generating a **single diagram** for a doc or PR | `/diagram` |
+| Reviewing **code or a design doc** | `/review` |
+
+`/hld` and `/lld` are forward-looking (design artifacts). `/onboard` is backward-looking (discovery from existing code). Use `/hld` → `/lld` when architecting new systems; use `/onboard` alone when onboarding to an existing repo.
+
 ## Hybrid Diagram Strategy
 
 | Tool | Use For | Limit |
@@ -98,7 +110,7 @@ Command files use `$ARGUMENTS` to receive user input (e.g., `/my-command build a
 | `claude/commands/review.md` | /review slash command |
 | `templates/hld-template.md` | HLD template with pre-wired diagrams |
 | `templates/lld-template.md` | LLD template with API specs, DB design, state machines |
-| `templates/onboard-template.md` | Onboarding doc template (17 sections) |
+| `templates/onboard-template.md` | Onboarding doc template (22 sections) |
 | `examples/cloud-architecture.py` | Python Diagrams AWS architecture example |
 | `docs/setup-guide.md` | Complete setup walkthrough for beginners |
 | `docs/how-it-works.md` | How Claude Code config loading works |

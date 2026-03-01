@@ -2,7 +2,7 @@
 
 ## Output Conventions
 
-- Create output directories before writing: `docs/designs/`, `docs/diagrams/`, `examples/`
+- Create output directories before writing: `docs/designs/`, `docs/diagrams/`
 - Use kebab-case for filenames: `hld-payment-service.md`, `user-auth-flow.svg`
 - Always read existing files/code before modifying or reviewing them
 - Slash commands receive user input via `$ARGUMENTS`

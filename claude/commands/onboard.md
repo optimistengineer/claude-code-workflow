@@ -80,17 +80,16 @@ Full ER with all tables/collections — every column with type and constraint. A
 - **Index strategy table** (table | index name | columns | type | purpose)
 - **Migration strategy** — which tool (`file`), how to create a new migration, how to run, how to roll back
 
-### 7. API Reference
-Discover all endpoints from the router file(s). For every endpoint:
-- Method, path, description, auth required, handler location (`file:line`)
+### 7. Interface Reference
+Determine the interface type from the codebase, then document accordingly:
 
-For each important endpoint (all CRUD + any complex business operations), include:
-- Request schema with real field names, types, validation rules
-- Response schema (success) with real field names
-- Error response table (code | message | HTTP status | retryable)
-- Rate limit if applicable
+**HTTP service** — discover all endpoints from the router file(s). For each: method, path, description, auth required, handler location (`file:line`). For every CRUD + complex operation: request schema with real field names and validation rules, response schema, error codes table (code | message | HTTP status | retryable), rate limits. Include: base URL, auth mechanism, pagination strategy with example shape.
 
-Include: base URL pattern, auth mechanism (header name, token format), pagination strategy with example response shape.
+**CLI tool** — document every command and flag: name, description, arguments, options, default values, example invocations. Discovered from `cmd/`, `cobra` commands, `argparse` setup, `click` decorators, etc.
+
+**Library** — document every exported function/class: signature, parameters with types, return type, usage example (`file:line`). Discovered from public API surface (exported symbols, `__init__.py`, `index.ts`, etc.).
+
+**Worker / batch processor** — document the job contract: input schema (queue message or cron trigger), processing steps, output / side effects, error handling and retry behavior. Discovered from queue consumer setup, job scheduler config.
 
 ### 8. System Behavior
 Three sub-sections derived from reading the service and model layers:
@@ -111,7 +110,7 @@ The 2–3 most important user-facing operations. For each:
 Derive from code where possible (timeout values, pool sizes, retry limits, cache TTLs). Table: category | requirement | target | how measured. Cover: availability, P99 latency, throughput, scalability, data retention, RTO/RPO.
 
 ### 11. Infrastructure & Deployment ← Mermaid deployment diagram
-- **Deployment diagram** — multi-AZ layout: LB → service instances → primary/replica DB, cache cluster
+- **Deployment diagram** — derive the actual topology from `Dockerfile`, `docker-compose.*`, CI/CD workflow files, and any Kubernetes/Terraform/CDK configs. Do not assume multi-AZ or specific components; show what exists.
 - **CI/CD pipeline table** (stage | trigger | what it does | approx time) — read from workflow files
 - **Environments table** (env | URL | DB | how to access)
 - **How to deploy** — exact steps from workflow files or Makefile
@@ -199,4 +198,5 @@ Categories to search for: implicit behaviors, global state, order-dependent init
 ## Output
 - Create `docs/` if it doesn't exist
 - Save to `docs/onboarding.md`
+- **If the document is too long to complete in one response:** generate §1–11 first (architecture, data, interfaces, behavior, infra), then explicitly say "Continuing with §12–22…" and proceed. Never silently truncate.
 - After writing, print a one-line summary per section confirming it was completed

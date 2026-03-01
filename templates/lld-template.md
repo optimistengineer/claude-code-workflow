@@ -8,6 +8,23 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#1-overview)
+2. [Module Architecture](#2-module-architecture)
+3. [Class/Module Design](#3-classmodule-design)
+4. [API Design](#4-api-design)
+5. [API Flow](#5-api-flow)
+6. [Database Design](#6-database-design)
+7. [Event Design](#7-event-design)
+8. [State Machine](#8-state-machine)
+9. [Error Handling](#9-error-handling)
+10. [Configuration](#10-configuration)
+11. [Testing Strategy](#11-testing-strategy)
+12. [Security](#12-security)
+
+---
+
 ## 1. Overview
 
 ### 1.1 Module Purpose

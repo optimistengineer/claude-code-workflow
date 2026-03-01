@@ -67,7 +67,11 @@ echo ""
 # ── Step 1: Git pull ──
 info "Pulling latest changes..."
 cd "$REPO_DIR"
-git pull --ff-only 2>&1 | while read -r line; do echo "  $line"; done
+if ! git pull --ff-only; then
+  warn "git pull failed. Your branch may have diverged or have local changes."
+  warn "Resolve manually (git pull / git stash), then re-run sync.sh."
+  exit 1
+fi
 echo ""
 
 # ── Step 2: Sync CLAUDE.md ──
