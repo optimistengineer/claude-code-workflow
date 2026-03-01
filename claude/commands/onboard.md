@@ -1,131 +1,202 @@
 Generate a **complete onboarding document** for the codebase at: $ARGUMENTS
 
-This document is written by a principal architect for a junior engineer. It must be exhaustive — the reader should never need to grep the codebase or ask a colleague to understand how the system works.
-
-## Phase 1: Research (do this before writing a single line)
-
-### 1. Read existing design docs first
-Check `docs/designs/` for HLD and LLD files. If they exist, read them fully — they are the primary source for architecture, ADRs, API specs, DB schema, state machines, and NFRs. Do not regenerate what's already there; synthesize it.
-
-### 2. Explore the repo systematically
-- Directory tree: understand the full structure
-- Entry points: `main.*`, `index.*`, `cmd/`, `app.*`, `server.*`, `Makefile`, `package.json` scripts
-- Dependency manifest: `go.mod`, `package.json`, `requirements.txt`, `Gemfile`, `pom.xml`
-- Config: `.env.example`, `config.*`, `*.yaml`, `*.toml`
-- CI/CD: `.github/workflows/`, `Dockerfile`, `docker-compose.*`, deployment scripts
-- Core modules: read the most-imported packages/modules, the key interfaces, and the central data types
-- Tests: read representative test files to understand patterns and what's covered
-- Migrations: read DB migration files to understand schema history
-
-### 3. Discover the real details
-Extract actual values — real env var names, real file paths, real function signatures, real command strings. Never use placeholders like `<your-value>` when the real value exists in the code.
+This is written by a principal architect for a junior engineer. It must be exhaustive and self-sufficient — covering architecture, design, data, API, behavior, operations, and development workflows. No pre-existing HLD or LLD is needed; derive everything from the codebase itself.
 
 ---
 
-## Document Structure (17 sections)
+## Phase 1: Research (do ALL of this before writing a single word)
+
+Read the following in order. Never skip a category.
+
+**Structure**
+- Full directory tree — every top-level folder and key files within each
+- README if present (domain context, any existing documentation)
+
+**Entry & Bootstrap**
+- App entry points: `main.*`, `index.*`, `cmd/`, `app.*`, `server.*`
+- Dependency wiring: DI container, factory functions, bootstrap sequence
+- Dependency manifests: `go.mod`, `package.json`, `requirements.txt`, `Gemfile`, `pom.xml`
+
+**Configuration**
+- `.env.example`, `config.*`, `*.yaml`, `*.toml`, `*.ini` — every env var name and default
+- The file that loads/validates config at startup
+
+**Domain & Data**
+- All database migration files in order — reconstruct the full schema history
+- Core domain models/entities — the central data types the whole app revolves around
+- Key interfaces, abstract classes, or type definitions
+
+**API Surface**
+- Router registration file(s) — all routes, middleware chain, HTTP method + path
+- Handler files — request/response shapes, validation logic
+- Middleware — auth, logging, rate limiting, error handling
+
+**Business Logic**
+- Service layer files — the 5-10 most-called services
+- Most-imported utility packages
+
+**Infrastructure**
+- `Dockerfile`, `docker-compose.*` — local and production infrastructure
+- `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile` — CI/CD pipeline stages
+- `Makefile` or `package.json` scripts — all developer commands
+
+**Tests**
+- One representative unit test and one integration test — understand the patterns, mock setup, and assertion style
+- Test configuration files
+
+**Extract the real values**: actual env var names, actual file paths, actual function signatures, actual commands. Use `[placeholder]` only when the value genuinely cannot be determined from the code.
+
+---
+
+## Document Structure (22 sections)
 
 ### 1. What Is This System?
-One punchy paragraph: what it does, who uses it, what problem it solves. Then: key business domain concepts — define every domain term a new engineer will encounter (as a glossary table: Term, Definition, Where it appears in code).
+One paragraph: what it does, who uses it, what problem it solves. Then a domain glossary table (Term | Plain-English definition | Where it appears in code) covering every domain concept a new engineer will encounter.
 
 ### 2. Repo Structure
-Annotated directory tree showing every top-level directory and key files. For each entry: what it contains and when a developer touches it. Include a "start here" callout for the 3-5 files to read first.
+Annotated directory tree with every top-level directory and key files. For each entry: what it contains and when a developer touches it. End with a **"Start here"** callout — the 3–5 files to read first, in order, with one sentence explaining each.
 
-### 3. Architecture Overview ← Excalidraw hero diagram
-Use **Excalidraw MCP** (`read_me` then `create_view`) for a full system overview: all components, external dependencies, and data flows between them. Follow with a **Mermaid** component diagram (`graph TB`) for the internal architecture. If HLD exists, reference and extend it — don't duplicate.
+### 3. System Context ← Excalidraw MCP hero diagram
+`read_me` then `create_view`. Show: system boundary box, all actor types (human users, admin users, other systems), and every external dependency (databases, queues, third-party APIs, auth providers, CDNs). This is the one diagram a new engineer should look at first.
 
-### 4. Key Files Every Developer Must Know
-Table: File path, What it does, When you'll need to change it. Include: entry points, core interfaces/abstractions, config loader, router/handler registration, DB models, key utilities. Minimum 8-10 entries. For each, include a short code snippet showing how it's used.
+### 4. Architecture ← Mermaid `graph TB`
+Internal component diagram with subgraphs by layer: Core/Blue, External/Green, Data stores/Yellow, Security/Red, Infra/Grey. Show all major services and connections. Follow with:
+- **Component responsibilities table** (component | what it does | key files)
+- **Communication patterns table** (from | to | protocol | sync or async | notes)
 
-### 5. Core Abstractions & Design Patterns
-For each major abstraction (interface, base class, middleware, decorator, HOC, etc.):
+### 5. Key Files & Core Abstractions
+**Key files table** — min 10 entries: file path | what it does | when you change it. Include: entry point, router, every middleware, core models, config loader, key utilities, test helpers.
+For each snippet: show the actual code from the file with a `// file:line` comment.
+
+**Core abstractions** — for each major interface/base class/pattern used in this codebase:
 - What it is and why it exists
-- Code snippet showing the definition
-- Code snippet showing how to implement/use it
-- Where all existing implementations live
+- Definition snippet (`// file:line`)
+- Usage snippet (how to implement or call it)
+- All existing implementations listed by file path
 
 ### 6. Data Model ← Mermaid ER diagram
-Full ER diagram with all tables/collections. For each entity: field descriptions, constraints, what it represents in the domain. If LLD exists, extend it with domain explanations. Include: soft delete patterns, audit fields, relationships explained in plain English.
+Full ER with all tables/collections — every column with type and constraint. All FK relationships. Follow with:
+- **Entity descriptions** — for each table: what it represents in the domain, when records are created/deleted, lifecycle notes, important field explanations (especially status enums, JSON blobs, soft-delete columns)
+- **Index strategy table** (table | index name | columns | type | purpose)
+- **Migration strategy** — which tool (`file`), how to create a new migration, how to run, how to roll back
 
 ### 7. API Reference
-If LLD exists, pull from it. Otherwise, discover from routes/controllers. For every endpoint:
-- Method, path, description, auth requirement
-- Request body with real field names, types, validation rules
-- Response shapes (success + error) with real examples
-- Which service/function handles it (file:line)
+Discover all endpoints from the router file(s). For every endpoint:
+- Method, path, description, auth required, handler location (`file:line`)
 
-### 8. Key Data Flow Walkthroughs ← Mermaid sequence diagrams
-Pick the 2-3 most important user-facing operations (e.g., user signup, placing an order, processing a job). For each:
-- Narrative walkthrough: step by step in plain English
-- Sequence diagram showing every service, function call, and DB query
-- Code pointers: file:line for each major step
-- What can go wrong and how errors are handled
+For each important endpoint (all CRUD + any complex business operations), include:
+- Request schema with real field names, types, validation rules
+- Response schema (success) with real field names
+- Error response table (code | message | HTTP status | retryable)
+- Rate limit if applicable
 
-### 9. Local Development Setup
-**Prerequisites** — exact tools and versions required (read from tooling configs).
-**Step-by-step setup** — every command, in order, that takes a fresh machine to a running app. Include: cloning, dependency install, environment setup (every required env var with description and example value), database setup, seeding, starting the server. Every command must be copy-pasteable and correct.
-**Verifying it works** — exact command to run and what healthy output looks like.
+Include: base URL pattern, auth mechanism (header name, token format), pagination strategy with example response shape.
 
-### 10. Daily Developer Workflows
-For each workflow, provide the exact commands and file locations:
-- Run all tests / run a single test / run tests matching a pattern
-- Add a new API endpoint (step-by-step: where to add route, handler, service, tests)
-- Add a new database migration (commands + what to edit)
+### 8. System Behavior
+Three sub-sections derived from reading the service and model layers:
+
+**State Machine ← Mermaid `stateDiagram-v2`** — primary entity lifecycle. All valid states and transitions. Follow with transition rules table (from | to | trigger | guard condition).
+
+**Event Design ← Mermaid flowchart** — producers → topics/queues → consumers → DLQ. Include a CloudEvents-style JSON schema example for the primary event type.
+
+**Error Handling** — error taxonomy table (category | example | action). Retry config (read from code: max attempts, delays, backoff multiplier, retryable error types). Circuit breaker config if present. Fallback behavior table (scenario | fallback).
+
+### 9. Data Flow Walkthroughs ← Mermaid sequence diagrams
+The 2–3 most important user-facing operations. For each:
+- **Narrative** — numbered steps in plain English, each step with `file:line` pointer
+- **Sequence diagram** — every participant: client, middleware, handler, service, repository, DB, cache, queue
+- **Failure paths** — what happens at each possible failure point (auth failure, validation error, DB down, queue down)
+
+### 10. Non-Functional Requirements
+Derive from code where possible (timeout values, pool sizes, retry limits, cache TTLs). Table: category | requirement | target | how measured. Cover: availability, P99 latency, throughput, scalability, data retention, RTO/RPO.
+
+### 11. Infrastructure & Deployment ← Mermaid deployment diagram
+- **Deployment diagram** — multi-AZ layout: LB → service instances → primary/replica DB, cache cluster
+- **CI/CD pipeline table** (stage | trigger | what it does | approx time) — read from workflow files
+- **Environments table** (env | URL | DB | how to access)
+- **How to deploy** — exact steps from workflow files or Makefile
+- **How to roll back** — exact command or procedure
+
+### 12. Monitoring & Observability
+Key metrics table (metric | type: counter/gauge/histogram | alert threshold). Dashboards list with URLs if present in config. Log aggregation: where logs go, log format (structured JSON?), correlation ID strategy. SLI/SLO targets if defined in code or config.
+
+### 13. Security
+- **Auth flow** — method (JWT/OAuth2/API Key), validation location (`file:line`), RBAC roles and what each can do
+- **Input validation** — table of validation rules per field (read from schema/validation files)
+- **Encryption** — at rest (which fields, which algorithm, key management), in transit (TLS version), secrets management tool
+- **OWASP checklist** — SQL injection, XSS, CSRF, rate limiting, security headers, dependency scanning — mark each present/absent/partial
+
+### 14. Local Development Setup
+**Prerequisites table** — tool | exact version (from `.nvmrc`, `go.mod`, `.python-version`, etc.) | check command | install command.
+
+**Step-by-step** — every command in order, from a fresh machine to a running app. Number each step. Every command must be copy-pasteable and accurate. Include: clone, install deps, start infrastructure, configure env vars, run migrations, seed data, start server.
+
+**Verify it's working** — exact command + expected output.
+
+### 15. Daily Developer Workflows
+For each workflow: exact commands AND the files to touch. Workflows to cover:
+- Run all tests / single test file / test matching pattern / with coverage report
+- Add a new API endpoint — step-by-step: router → handler → service → repository → test
+- Add a database migration — create command, edit, run, verify, rollback
 - Add a background job/worker
-- Run the linter / formatter / type checker
-- Debug locally (how to attach a debugger or add breakpoints)
-- Read logs locally
+- Run linter / formatter / type checker
+- Debug locally — start command, debugger port, VS Code config location
+- Read application logs locally
 
-### 11. Configuration & Environment Variables
-Table of every env var the system reads: Name, Required/Optional, Default, Description, Example value. Group by: app config, database, external services, feature flags. Note which file loads them and where they're validated.
+### 16. Configuration & Environment Variables
+Loaded by `[config file]`. The app [will / will not] start if a required var is missing.
 
-### 12. Testing Guide
-- How tests are organized (unit/integration/e2e locations)
-- How to run each layer separately
-- What's mocked and how (show the mock setup pattern)
-- How to write a new unit test — complete example from the repo's style
-- How to write a new integration test — complete example
-- What test coverage targets are and how to check them
+Tables grouped by category — each row: variable name | required | default | description | example value:
+- App config (port, log level, env name, etc.)
+- Database (connection, pool sizes)
+- External services (API keys, base URLs)
+- Feature flags
 
-### 13. Coding Conventions
-Extract the actual patterns used in this codebase:
-- File and folder naming conventions
-- Function/variable naming rules
-- Error handling pattern (show the actual pattern used, not generic)
-- Logging pattern (show how logs are structured in this codebase)
-- Where business logic lives vs. where infrastructure code lives
-- **What NOT to do** — anti-patterns found or implied in the codebase with explanation of why
+### 17. Testing Guide
+- **Structure** — annotated directory tree of the test folder
+- **Run commands** — unit / integration / e2e separately + all together + coverage
+- **Write a unit test** — complete real example from this codebase with describe/it/expect structure (`file:line`)
+- **Write an integration test** — complete real example showing DB setup/teardown (`file:line`)
+- **Mocking strategy** — external HTTP (tool + pattern), database (tool + pattern), time/clocks if applicable
+- **Coverage targets** — where to check, what the current target is
 
-### 14. Deployment & Operations
-- CI/CD pipeline: what triggers it, what each stage does (read from workflow files)
-- Environments: dev, staging, prod — what's different between them
-- How to deploy: exact steps or which pipeline to trigger
-- How to roll back
-- How to check if the app is healthy (endpoint, dashboard, log query)
-- Key runbooks: what to do when the DB is slow, when the queue backs up, when errors spike
+### 18. Coding Conventions
+Extracted from the actual codebase — not generic advice:
+- File and folder naming (with examples from this repo)
+- Function/variable naming rules (with examples)
+- Error handling pattern — real snippet from this codebase (`file:line`)
+- Logging pattern — real snippet (`file:line`)
+- Where business logic lives vs infrastructure code — rule + example
+- **What NOT to do** — min 5 anti-patterns, each with: pattern, why it's wrong, what to do instead, example from repo if present
 
-### 15. Design Decisions (ADR Summary)
-If HLD/LLD ADR tables exist, pull them here. Otherwise, infer key decisions from the code (choice of framework, DB, queue, auth approach, etc.) and document them as: Decision, Why this approach, Trade-offs accepted.
+### 19. Design Decisions
+Infer from the codebase: framework choice, DB choice, auth approach, pagination strategy, event system, caching strategy, etc. Table: # | Decision | Options that existed | Chosen | Rationale | Trade-offs accepted.
 
-### 16. Gotchas & FAQs
-Real gotchas discovered from reading the code — non-obvious behaviors, footguns, things that will confuse a new engineer. Format: **Q: [thing they'll wonder]** → **A: [explanation + code pointer]**. Minimum 8 entries. Examples of what to look for: implicit behaviors, global state, order-dependent initialization, timeout values, retry logic side effects, cache invalidation assumptions.
+### 20. Risks & Mitigations
+Identify from reading the architecture: SPOFs, scaling bottlenecks, data loss scenarios, security gaps, operational risks. Table: # | Risk | Probability (H/M/L) | Impact (H/M/L) | Mitigation | Owner (team, not person).
 
-### 17. First Week Checklist
-Ordered tasks to go from zero to productive:
-- Day 1: environment setup + reading list (link to sections above)
-- Day 2: run the test suite, make a trivial change, submit a PR
-- Day 3: implement a small feature end-to-end using the workflows above
-- Contacts: who owns what (fill from CODEOWNERS, git blame patterns, or leave placeholders)
+### 21. Gotchas & FAQs
+Min 10 real Q&As discovered from reading the code. Non-obvious behaviors, footguns, confusing patterns. Format:
+**Q: [what a new engineer will inevitably wonder]**
+A: [clear explanation + `file:line` pointer to the relevant code]
+
+Categories to search for: implicit behaviors, global state, order-dependent init, magic timeout values, retry side effects, cache invalidation assumptions, environment-specific branching, hidden dependencies between modules.
+
+### 22. First Week Checklist
+- **Day 1** — setup + architecture reading list (link to sections above)
+- **Day 2** — run tests, step through a flow in debugger, trivial change + PR
+- **Day 3** — implement a small feature end-to-end
+- **Contacts table** — area | owner | how to reach (fill from CODEOWNERS or leave as placeholder)
 
 ---
 
 ## Diagram Rules
-- Follow the hybrid strategy from CLAUDE.md
-- Use `%%{init: {'theme': 'neutral'}}%%` for all Mermaid diagrams
-- Add `<!-- diagram-tool: ... -->` above each diagram
-- Max 2 Excalidraw diagrams (hero overview + 1 more if genuinely needed)
+- `%%{init: {'theme': 'neutral'}}%%` on all Mermaid diagrams
+- `<!-- diagram-tool: mermaid|excalidraw -->` above each diagram
+- Color coding: Blue (#4A90D9)=core, Green (#7CB342)=external, Yellow (#FDD835)=data, Red (#E53935)=security, Grey (#9E9E9E)=infra
+- Max 2 Excalidraw diagrams total — the system context hero, plus one more only if genuinely needed
 
 ## Output
-- Create `docs/` directory if it doesn't exist
+- Create `docs/` if it doesn't exist
 - Save to `docs/onboarding.md`
-- If HLD/LLD docs exist, add a note at the top of the doc linking to them
-- Print a summary of sections written and key discoveries from the codebase
+- After writing, print a one-line summary per section confirming it was completed

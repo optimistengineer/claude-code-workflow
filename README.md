@@ -61,7 +61,7 @@ cd ~/claude-code-workflow
 |---------|-------------|
 | `/hld <system>` | Generates a 10-section High-Level Design with diagrams |
 | `/lld <module>` | Generates a 12-section Low-Level Design with API specs, DB schemas, state machines |
-| `/onboard` | Generates exhaustive onboarding docs from the codebase — reads HLD/LLD + source, covers architecture, setup, workflows, conventions, gotchas |
+| `/onboard` | Generates a complete 22-section onboarding doc from scratch — no HLD/LLD needed. Covers everything: architecture, data model, API, state machines, events, error handling, NFRs, infra, security, setup, workflows, conventions, decisions, risks, gotchas |
 | `/diagram <description>` | Generates a single diagram using the right tool (Mermaid/Excalidraw/Python Diagrams) |
 | `/review <code or design>` | Reviews across 5 categories with prioritized action items |
 
