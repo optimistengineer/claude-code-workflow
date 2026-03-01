@@ -14,15 +14,13 @@ claude-code-workflow/               ~/.claude/
 │       ├── lld.md         ──────►  │   ├── lld.md         (/lld command)
 │       ├── onboard.md     ──────►  │   ├── onboard.md     (/onboard command)
 │       ├── diagram.md     ──────►  │   ├── diagram.md     (/diagram command)
-│       ├── design-decisions.md ►  │   ├── design-decisions.md (/design-decisions command)
 │       └── review.md      ──────►  │   └── review.md      (/review command)
 │                                   │
 ├── mcp-servers.json       ──────►  └── .mcp.json          (MCP servers)
 │
 ├── templates/                      (stays in repo)
 │   ├── hld-template.md
-│   ├── lld-template.md
-│   └── design-decisions-template.md
+│   └── lld-template.md
 ├── examples/                       (stays in repo)
 │   └── cloud-architecture.py
 └── docs/                           (stays in repo)
@@ -64,7 +62,6 @@ cd ~/claude-code-workflow
 | `/hld <system>` | Generates a 10-section High-Level Design with diagrams |
 | `/lld <module>` | Generates a 12-section Low-Level Design with API specs, DB schemas, state machines |
 | `/onboard` | Generates a complete 22-section onboarding doc from scratch — no HLD/LLD needed. Covers everything: architecture, data model, API, state machines, events, error handling, NFRs, infra, security, setup, workflows, conventions, decisions, risks, gotchas |
-| `/design-decisions` | Generates a standalone Design Decisions & Trade-offs doc — 10–15 ADRs inferred from the codebase covering framework, DB, auth, API style, pagination, events, error handling, and more |
 | `/diagram <description>` | Generates a single diagram using the right tool (Mermaid/Excalidraw/Python Diagrams) |
 | `/review <code or design>` | Reviews across 5 categories with prioritized action items |
 
@@ -75,11 +72,10 @@ cd ~/claude-code-workflow
 | Designing a **new system** before building it | `/hld` |
 | Designing a **specific module** in detail before coding it | `/lld` |
 | Documenting an **existing codebase** for a new team member | `/onboard` |
-| Capturing **why decisions were made** in an existing codebase | `/design-decisions` |
 | Generating a **single diagram** for a doc or PR | `/diagram` |
 | Reviewing **code or a design doc** | `/review` |
 
-`/hld` and `/lld` are forward-looking (design artifacts). `/onboard` and `/design-decisions` are backward-looking (discovery from existing code). `/onboard` covers everything; `/design-decisions` is focused — run it when you want just the architectural "why" without the full onboarding doc.
+`/hld` and `/lld` are forward-looking (design artifacts). `/onboard` is backward-looking (discovery from existing code). Use `/hld` → `/lld` when architecting new systems; use `/onboard` alone when onboarding to an existing repo.
 
 ## Hybrid Diagram Strategy
 
@@ -111,12 +107,10 @@ Command files use `$ARGUMENTS` to receive user input (e.g., `/my-command build a
 | `claude/commands/lld.md` | /lld slash command |
 | `claude/commands/onboard.md` | /onboard slash command |
 | `claude/commands/diagram.md` | /diagram slash command |
-| `claude/commands/design-decisions.md` | /design-decisions slash command |
 | `claude/commands/review.md` | /review slash command |
 | `templates/hld-template.md` | HLD template with pre-wired diagrams |
 | `templates/lld-template.md` | LLD template with API specs, DB design, state machines |
 | `templates/onboard-template.md` | Onboarding doc template (22 sections) |
-| `templates/design-decisions-template.md` | Design Decisions template with ADR format (10–15 decisions) |
 | `examples/cloud-architecture.py` | Python Diagrams AWS architecture example |
 | `docs/setup-guide.md` | Complete setup walkthrough for beginners |
 | `docs/how-it-works.md` | How Claude Code config loading works |
